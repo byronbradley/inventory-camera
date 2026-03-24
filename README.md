@@ -30,6 +30,20 @@ window. A label prints once while it stays detected. It can print again after
 a frame without that label, so this is not an inventory count. Press Ctrl+C
 to stop. Camera-open and frame-read failures exit with an error.
 
+Each reported reading also appends to `captures/readings.csv` with a UTC
+timestamp. Existing rows are kept, with one header. Choose another path with:
+
+```sh
+python camera.py --output captures/session-1.csv
+python camera.py --pi --output captures/pi-session-1.csv
+```
+
+Columns are `timestamp_utc,barcode`. Each row is flushed after writing.
+Repeated detections follow the same rule as terminal output above; rows are
+scan events, not unique items or inventory quantities. The `captures/` folder
+is ignored by Git. Import the barcode column as text in spreadsheets to keep
+leading zeros. Use one scanner process per output file.
+
 ## Raspberry Pi Camera Module 3
 
 On Raspberry Pi OS Bookworm or newer, install the system camera packages.
@@ -68,7 +82,6 @@ Physical camera and lighting/angle trials still need to be run.
 
 ## Next
 
-- Save readings with timestamps.
 - Measure recognition across lighting and viewing angles.
 
 OpenCV loads images and converts them to grayscale.
