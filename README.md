@@ -78,11 +78,29 @@ python -m unittest -v
 Tests generate a clean EAN-13 label and a blank image. Camera tests use
 simulated frames to check repeated readings, failures, and device cleanup.
 Picamera2 tests check configuration, autofocus controls, and cleanup using mocks.
-Physical camera and lighting/angle trials still need to be run.
+Physical camera trials still need to be run.
 
-## Next
+## Lighting and viewing angles
 
-- Measure recognition across lighting and viewing angles.
+```sh
+python conditions.py
+```
+
+Runs 60 synthetic image trials: three EAN-13 labels, four brightness gains
+(0.25, 0.5, 1.0, 1.5), and five horizontal viewing angles (-60, -30, 0, 30, 60
+degrees). A pinhole projection simulates a flat label turning around its vertical
+axis. Results are saved to [results/synthetic-conditions.csv](results/synthetic-conditions.csv).
+`correct` requires exactly the expected barcode with no extra readings.
+
+The checked-in run decoded 54/60 trials exactly: five had no reading, and one
+returned the expected value plus an incorrect extra value. All five missed reads
+were at +60 degrees. Results depend on decoder and image-library versions.
+
+These are generated-image decoder tests. Brightness gain is not a lux measurement,
+and projection does not reproduce glare, focus, exposure, motion blur, or sensor
+noise. For physical trials, keep distance fixed, measure the label angle, record
+the lighting setup, and save frames with known label values. Include failed
+reads when calculating the recognition rate.
 
 OpenCV loads images and converts them to grayscale.
 [ZXing-C++](https://github.com/zxing-cpp/zxing-cpp/tree/master/wrappers/python)
