@@ -92,9 +92,16 @@ degrees). A pinhole projection simulates a flat label turning around its vertica
 axis. Results are saved to [results/synthetic-conditions.csv](results/synthetic-conditions.csv).
 `correct` requires exactly the expected barcode with no extra readings.
 
-The checked-in run decoded 54/60 trials exactly: five had no reading, and one
-returned the expected value plus an incorrect extra value. All five missed reads
-were at +60 degrees. Results depend on decoder and image-library versions.
+The current run decoded 57/60 trials exactly, up from the
+[54/60 baseline](results/synthetic-conditions-baseline.csv). The decoder retries
+empty reads at 2x size and confirms multiple candidates at a second scale.
+This recovered two missed reads and removed one extra incorrect candidate.
+Three +60-degree trials for `0012345678905` still return no reading.
+
+Retries add processing time; live frame rate has not been measured on the Pi.
+Agreement between scales reduces some errors but does not prove a reading is
+correct, and confirmation can reject a real label. Results depend on decoder
+and image-library versions.
 
 These are generated-image decoder tests. Brightness gain is not a lux measurement,
 and projection does not reproduce glare, focus, exposure, motion blur, or sensor

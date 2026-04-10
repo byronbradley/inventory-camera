@@ -9,7 +9,19 @@ def decode_image(image):
     if image is None or image.size == 0:
         raise ValueError("Image is empty")
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if image.ndim == 3 else image
-    return [result.text for result in zxingcpp.read_barcodes(gray) if result.valid]
+    values = _read_values(gray)
+    if not values:
+        enlarged = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+        values = _read_values(enlarged)
+    if len(values) > 1:
+        # Require a second-scale read before reporting multiple candidates.
+        check = cv2.resize(gray, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_CUBIC)
+        values &= _read_values(check)
+    return sorted(values)
+
+
+def _read_values(gray):
+    return {result.text for result in zxingcpp.read_barcodes(gray) if result.valid}
 
 
 def main():
