@@ -92,11 +92,20 @@ degrees). A pinhole projection simulates a flat label turning around its vertica
 axis. Results are saved to [results/synthetic-conditions.csv](results/synthetic-conditions.csv).
 `correct` requires exactly the expected barcode with no extra readings.
 
-The current run decoded 57/60 trials exactly, up from the
+The current run decoded 60/60 trials exactly, up from the
 [54/60 baseline](results/synthetic-conditions-baseline.csv). The decoder retries
-empty reads at 2x size and confirms multiple candidates at a second scale.
-This recovered two missed reads and removed one extra incorrect candidate.
-Three +60-degree trials for `0012345678905` still return no reading.
+empty reads at 2x size, then 3x only if still unreadable, and confirms multiple
+candidates at a second scale. The 3x retry recovered the final three
++60-degree failures for `0012345678905` without supplying the expected value
+to the decoder.
+
+Five additional labels decoded exactly in 100/100 trials using the same
+synthetic conditions. Results are in [results/additional-labels.csv](results/additional-labels.csv).
+Reproduce that run with:
+
+```sh
+python conditions.py --labels 978020137962 501234567890 123456789012 871234567890 761234567890 --output results/additional-labels.csv
+```
 
 Retries add processing time; live frame rate has not been measured on the Pi.
 Agreement between scales reduces some errors but does not prove a reading is

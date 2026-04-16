@@ -41,3 +41,11 @@ class ConditionTests(unittest.TestCase):
         second, second_value = make_label("400638133393")
         image = np.concatenate([first, second], axis=0)
         self.assertEqual(decode_image(image), sorted([first_value, second_value]))
+
+    def test_steep_label_at_low_and_normal_brightness(self):
+        image, expected = make_label("001234567890")
+        for gain in [0.25, 0.5, 1.0]:
+            with self.subTest(brightness=gain):
+                tilted = viewing_angle(image, 60)
+                frame = np.clip(tilted.astype(np.float32) * gain, 0, 255).astype(np.uint8)
+                self.assertEqual(decode_image(frame), [expected])

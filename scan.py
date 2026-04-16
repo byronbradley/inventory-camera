@@ -10,8 +10,10 @@ def decode_image(image):
         raise ValueError("Image is empty")
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if image.ndim == 3 else image
     values = _read_values(gray)
-    if not values:
-        enlarged = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+    for scale in (2, 3):
+        if values:
+            break
+        enlarged = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
         values = _read_values(enlarged)
     if len(values) > 1:
         # Require a second-scale read before reporting multiple candidates.

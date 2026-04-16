@@ -41,9 +41,9 @@ def viewing_angle(image, degrees):
                                borderValue=(255, 255, 255))
 
 
-def run_trials():
+def run_trials(labels=LABELS):
     rows = []
-    for value in LABELS:
+    for value in labels:
         image, expected = make_label(value)
         for angle in ANGLES:
             tilted = viewing_angle(image, angle)
@@ -63,8 +63,10 @@ def run_trials():
 def main():
     parser = argparse.ArgumentParser(description="Run synthetic lighting and viewing-angle trials.")
     parser.add_argument("--output", type=Path, default=Path("results/synthetic-conditions.csv"))
+    parser.add_argument("--labels", nargs="+", default=LABELS,
+                        help="EAN-13 label values, with or without the check digit")
     args = parser.parse_args()
-    rows = run_trials()
+    rows = run_trials(args.labels)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", newline="", encoding="utf-8") as output:
         writer = csv.DictWriter(output, fieldnames=list(rows[0]))
