@@ -70,6 +70,11 @@ check it with `rpicam-hello --list-cameras` before running the scanner.
 
 ## Tests
 
+[![Tests](https://github.com/byronbradley/inventory-camera/actions/workflows/tests.yml/badge.svg)](https://github.com/byronbradley/inventory-camera/actions/workflows/tests.yml)
+
+GitHub Actions runs the test suite on Python 3.12 for pushes and pull requests.
+Camera tests use mocks, so CI does not require a connected camera or Picamera2.
+
 ```sh
 python -m pip install -r requirements-dev.txt
 python -m unittest -v
