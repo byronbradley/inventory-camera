@@ -2,6 +2,8 @@
 
 Python/OpenCV barcode reader for inventory labels.
 
+Hardware: [parts list](hardware/parts.md) · [wiring diagram and connections](hardware/wiring.md).
+
 ## Run
 
 Developed with Python 3.12.
