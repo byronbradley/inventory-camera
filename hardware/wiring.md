@@ -2,8 +2,8 @@
 
 ![Camera setup connections](wiring.svg)
 
-The diagram shows connector relationships, not physical board placement or
-individual CSI signal pins. Use the keyed board sockets and ribbon contacts.
+Connector-level diagram; use the board socket labels and ribbon contacts
+when assembling.
 
 | From | To | Carries |
 | --- | --- | --- |
@@ -26,7 +26,7 @@ individual CSI signal pins. Use the keyed board sockets and ribbon contacts.
    pulling on the cable.
 5. Insert the prepared microSD card and secure both boards on a nonconductive
    surface. Plug the supply into the Pi's Micro-USB PWR IN connector.
-6. Follow the [Pi software setup](../README.md#raspberry-pi-camera-module-3), then run:
+6. Follow the [Pi setup](../docs/pi-setup.md), then run:
 
 ```sh
 rpicam-hello --list-cameras
@@ -45,10 +45,7 @@ power. No separate camera power wire or GPIO connection is used.
   label size in the frame, and lighting before changing the wiring.
 - Do not solder to the ribbon or feed power through GPIO for this setup.
 
-Record actual assembly photos, measurements, and test observations when carrying
-out the build. These connection instructions do not establish those results.
-
 Sources: [Raspberry Pi camera installation](https://www.raspberrypi.com/documentation/accessories/camera.html),
 [Pi 2/3 ribbon orientation](https://magazine.raspberrypi.com/articles/get-started-pi-camera),
-[selected Camera Module 3](https://www.adafruit.com/product/5657),
-[selected supply](https://www.adafruit.com/product/1995).
+[Camera Module 3](https://www.adafruit.com/product/5657),
+[Adafruit 1995 supply](https://www.adafruit.com/product/1995).
